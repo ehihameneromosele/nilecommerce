@@ -61,23 +61,24 @@ class DashboardView(APIView):
         except Exception as e:
             return Response({'error':str(e)}, status = status.HTTP_INTERNAL_SERVER_ERROR)
 
-# update
 class UpdateProfileView(APIView):
-    def get(self,request):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
         try:
             profile = request.user.profile
             serializer = UpdateProfileSerializer(profile)
-            return Response(serializer.data,status=status.HTTP_200_OK)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         except Exception as e:
-            return Response({'error':str(e)}, status = status.HTTP_INTERNAL_SERVER_ERROR)
-    def put(self,request):
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def put(self, request):
         try:
             profile = request.user.profile
-            serializer = UpdateProfileSerializer(profile,data=request.data)
+            serializer = UpdateProfileSerializer(profile, data=request.data, partial=True)  # allow partial updates
             if serializer.is_valid():
                 serializer.save()
-                return Response(serializer.data,status=status.HTTP_200_OK)
-            return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
-            return Response({'error':str(e)}, status = status.HTTP_INTERNAL_SERVER_ERROR)
-        
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

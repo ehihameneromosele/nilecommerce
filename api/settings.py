@@ -13,9 +13,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
-# Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -27,8 +24,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'users.apps.UsersConfig',
-    'stores.apps.StoresConfig'
-
+    'stores.apps.StoresConfig',
+    'django_extensions',# remove after urls its working
 ]
 
 MIDDLEWARE = [
@@ -133,7 +130,10 @@ PAYSTACK_PUBLIC_KEY=str(os.getenv('PAYSTACK_PUBLIC_KEY'))
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',  # Or IsAuthenticated for protected endpoints
+    ]
 }
 
 from datetime import timedelta
