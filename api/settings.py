@@ -11,7 +11,7 @@ SECRET_KEY = str(os.getenv('SECRET_KEY'))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','127.0.0.1:8001','https://nilecommerce-1.onrender.com','nilecommerce-1.onrender.com']
+ALLOWED_HOSTS = ['localhost','127.0.0.1:8001','https://nilecommerce-3.onrender.com','nilecommerce-3.onrender.com']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
